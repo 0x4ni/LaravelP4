@@ -13,7 +13,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/Allergeen', [AllergeenController::class, 'index']);
+Route::get('/Allergeen', [AllergeenController::class, 'index'])->name('allergeen.index');;
+
+Route::get('/Allergeen/create', [AllergeenController::class, 'create'])->name('allergeen.create');
+
+Route::post('/Allergeen', [AllergeenController::class, 'store'])->name('allergeen.store');
 
 Route::get('/tandarts', [TandartsController::class, 'index'])
     ->name('tandarts.index')
