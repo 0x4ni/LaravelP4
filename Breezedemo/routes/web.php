@@ -6,11 +6,14 @@ use App\Http\Controllers\MondhygienistController;
 use App\Http\Controllers\PraktijkmanagementController;
 use App\Http\Controllers\AssistentController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\AllergeenController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/Allergeen', [AllergeenController::class, 'index']);
 
 Route::get('/tandarts', [TandartsController::class, 'index'])
     ->name('tandarts.index')
