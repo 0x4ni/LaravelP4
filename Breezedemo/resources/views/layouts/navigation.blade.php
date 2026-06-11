@@ -17,7 +17,7 @@
                     </x-nav-link>
                 </div>
 
-                @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
+                @if (Auth::check() && in_array(strtolower(Auth::user()->rolename ?? ''), ['patient', 'praktijkmanagement']))
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('patient.index')"
                                     :active="request()->routeIs('patient.index')">
@@ -26,38 +26,11 @@
                     </div>
                 @endif
 
-                @if (Auth::check() && Auth::user()->rolename === 'tandarts')
+                @if (Auth::check() && strtolower(Auth::user()->rolename ?? '') === 'praktijkmanagement')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('tandarts.index')"
-                                    :active="request()->routeIs('tandarts.index')">
-                            {{ __('Tandarts') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'mondhygienist')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('mondhygienist.index')"
-                                    :active="request()->routeIs('mondhygienist.index')">
-                            {{ __('Mondhygienist') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'assistent')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('assistent.index')"
-                                    :active="request()->routeIs('assistent.index')">
-                            {{ __('Assistent') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('praktijkmanagement.index')"
-                                    :active="request()->routeIs('praktijkmanagement.index')">
-                            {{ __('Praktijkmanagement') }}
+                        <x-nav-link :href="route('praktijkmanagement.userroles')"
+                                    :active="request()->routeIs('praktijkmanagement.userroles')">
+                            {{ __('Gebruikersrollen') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -115,6 +88,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (Auth::check() && in_array(strtolower(Auth::user()->rolename ?? ''), ['patient', 'praktijkmanagement']))
+                <x-responsive-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.index')">
+                    {{ __('Patient') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && strtolower(Auth::user()->rolename ?? '') === 'praktijkmanagement')
+                <x-responsive-nav-link :href="route('praktijkmanagement.userroles')" :active="request()->routeIs('praktijkmanagement.userroles')">
+                    {{ __('Gebruikersrollen') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
