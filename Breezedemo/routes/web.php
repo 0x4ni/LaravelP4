@@ -19,6 +19,8 @@ Route::get('/Allergeen/create', [AllergeenController::class, 'create'])->name('a
 
 Route::post('/Allergeen', [AllergeenController::class, 'store'])->name('allergeen.store');
 
+Route::delete('/allergeen/{id}', [AllergeenController::class, 'destroy'])->name('allergeen.destroy');
+
 Route::get('/tandarts', [TandartsController::class, 'index'])
     ->name('tandarts.index')
     ->middleware(['auth', 'role:tandarts']);
