@@ -57,14 +57,42 @@ class AllergeenController extends Controller
         //
     }
 
-    public function edit(string $id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        //
+        $allergeen = $this->allergeenModel->sp_GetAllergeenById($id);
+        abort_if(!$allergeen, 404);
+        return view('allergenen.edit', [
+            'title' => 'Allergeen wijzigen',
+            'allergeen' => $allergeen,
+        ]);
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'naam' => ['required', 'string', 'max:50'],
+            'omschrijving' => ['required', 'string', 'max:255'],
+        ]);
+
+        $affected = $this->allergeenModel->sp_UpdateAllergeen(
+            $id,
+            $validated['naam'],
+            $validated['omschrijving']
+        );
+
+        if ($affected === 0) {
+            return back()->with('error', 'Er is niets gewijzigd of item bestaat niet.');
+        }
+
+        return redirect()
+            ->route('allergeen.index')
+            ->with('success', 'Allergeen succesvol bijgewerkt.');
     }
 
     public function destroy($id)

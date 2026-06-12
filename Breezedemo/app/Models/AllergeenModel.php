@@ -32,4 +32,27 @@ class AllergeenModel extends Model
 
         return $result->affected;
     }
+
+    public function sp_GetAllergeenById($id)
+    {
+        return DB::selectOne(
+            'CALL sp_GetAllergeenById(:id)',
+            ['id' => $id]
+        );
+    }
+
+    public function sp_UpdateAllergeen($id, $name, $description)
+    {
+        $row = DB::selectOne(
+            'CALL sp_UpdateAllergeen(:id, :name, :description)',
+            [
+                'id'          => $id,
+                'name'        => $name,
+                'description' => $description
+            ]
+        );
+
+        // stored procedure geeft ROW_COUNT() als 'affected' terug
+        return $row->affected ?? 0;
+    }
 }

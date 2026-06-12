@@ -21,6 +21,9 @@ Route::post('/Allergeen', [AllergeenController::class, 'store'])->name('allergee
 
 Route::delete('/allergeen/{id}', [AllergeenController::class, 'destroy'])->name('allergeen.destroy');
 
+Route::post('/allergeen/{id}/edit', [AllergeenController::class, 'edit'])->name('allergeen.edit');
+Route::put('/allergeen/{id}', [AllergeenController::class, 'update'])->name('allergeen.update');
+
 Route::get('/tandarts', [TandartsController::class, 'index'])
     ->name('tandarts.index')
     ->middleware(['auth', 'role:tandarts']);
